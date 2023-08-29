@@ -13,10 +13,10 @@
 }:
 
 let
-  inherit (builtins) filter length elem any;
+  inherit (builtins) filter length elem any replaceStrings;
   inherit (lib)
     head nameValuePair assertMsg filesystem id listToAttrs concatStringsSep
-    replaceChars licenses;
+    licenses;
   pluginDerivations = listToAttrs (map
     (yamlFile:
       let
@@ -46,7 +46,7 @@ let
       # implicitly transforms dashes into underscores. This ensures that the
       # plugin can be invoked as “kubectl foo-bar”, instead of “kubectl foo
       # bar”.
-      pluginBinaryName = "kubectl-${replaceChars [ "-" ] [ "_" ] pluginName}";
+      pluginBinaryName = "kubectl-${replaceStrings [ "-" ] [ "_" ] pluginName}";
     in
     stdenv.mkDerivation {
       pname = "kubectl-krew-plugin-${pluginName}";
