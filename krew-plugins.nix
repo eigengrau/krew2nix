@@ -58,7 +58,7 @@ let
       };
       sourceRoot = ".";
       dontBuild = true;
-      nativeBuildInputs = [ unzip ] ++ lib.optionals (!stdenv.isDarwin) [ autoPatchelfHook ];
+      nativeBuildInputs = [ unzip ] ++ lib.optionals (stdenv.isLinux) [ autoPatchelfHook ];
       installPhase = ''
         runHook preInstall
         mkdir -p $out/{bin,lib}
